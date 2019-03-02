@@ -8,8 +8,8 @@ class App extends Component {
           <p>
            2048 Game
           </p>
-
         </header>
+        <Board />
       </div>
     )
   }
