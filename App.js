@@ -9,7 +9,7 @@ class App extends Component {
            2048 Game
           </p>
         </header>
-        <Board />
+        <gameContainer />
       </div>
     )
   }
