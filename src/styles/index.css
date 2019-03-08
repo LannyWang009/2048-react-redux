@@ -31,3 +31,9 @@ code {
 .App-link {
   color: #61dafb;
 }
+
+.cell {
+  background-color: red;
+  width: 30px;
+  height: 30px
+}

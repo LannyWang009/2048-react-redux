@@ -10,10 +10,12 @@
 - Lose condition: no empty space on board
 
 ## Actions:
+arrow keys
 - Right
 - Left
 - Up
 - Down
 
+Restart button
 - Restart
 
