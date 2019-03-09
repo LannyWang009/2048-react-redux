@@ -14,10 +14,8 @@ code {
 }
 
 .App {
+  width:100%;
   text-align: center;
-}
-
-.App-header {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -28,12 +26,20 @@ code {
   color: white;
 }
 
+
 .App-link {
   color: #61dafb;
 }
 
 .cell {
-  background-color: red;
-  width: 30px;
-  height: 30px
+  background-color: lightblue;
+  width:  180px;
+  height: 180px;
+  border: 5px solid grey;
+}
+
+.row {
+  display:flex;
+  flex-direction:row;
+  justify-content: center
 }
