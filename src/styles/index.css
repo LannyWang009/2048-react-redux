@@ -32,14 +32,68 @@ code {
 }
 
 .cell {
-  background-color: lightblue;
+  background-color: lightgray;
   width:  180px;
   height: 180px;
   border: 5px solid grey;
+  color:#a5adb0;
+  font-size:100px;
+  display: flex;
+  align-items: center;
+  justify-content: center
 }
 
 .row {
   display:flex;
   flex-direction:row;
   justify-content: center
+}
+
+.block-value-0 {
+  color:lightgray
+  
+}
+
+.block-value-2 {
+  background-color:#D7F950
+}
+
+.block-value-4 {
+  background-color:#C5F700
+}
+
+.block-value-8 {
+  background-color:#A4CE00
+}
+
+.block-value-16 {
+  background-color:#80A100
+}
+
+.block-value-32 {
+  background-color:#A88000
+}
+
+.block-value-64 {
+  background-color:#D7A400
+}
+
+.block-value-128 {
+  background-color:#FFC300
+}
+
+.block-value-256 {
+  background-color:#600BC0
+}
+
+.block-value-512 {
+  background-color:#8A4ECE
+}
+
+.block-value-1024 {
+  background-color:#480891
+}
+
+.block-value-2048 {
+  background-color:#380571
 }

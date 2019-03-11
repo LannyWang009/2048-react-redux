@@ -1,16 +1,39 @@
 import React, { Component } from 'react'
+
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import Row from '../components/Row'
 
-export default class BoardContainer extends Component {
+class BoardContainer extends Component {
+  // static propTypes = {
+  //   board:PropTypes.arrayOf(propTypes.array).isRequired
+  // }
+
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      board: props.board
+    }
+  }
+
   render () {
     return (
-      <div className='boardContainer'>
-        <h5>Below is the boardcontainer</h5>
-        <Row />
-        <Row />
-        <Row />
-        <Row />
+      <div>
+        {this.props.board.map((row, i) => (
+          <div key={i} className='row'>
+            {row.map((col, j) => (
+              <span key={j} className={'cell block-value-' + this.props.board[i][j]}>{this.props.board[i][j]}</span>
+            ))}
+          </div>
+        ))}
       </div>
     )
   }
 }
+
+const mapStateToProps = (state) => (
+  { board: state.board.board }
+)
+
+export default connect(mapStateToProps)(BoardContainer)

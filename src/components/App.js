@@ -15,9 +15,21 @@ class App extends Component {
   handler (event) {
     // console.log(event.key)
     if (event.key === 'ArrowUp') {
-      console.log(this.props.board)
-      console.log(event.key)
-      this.props.addRandomSquare(this.state.board)
+      // console.log(this.props.board)
+      console.log('you just pressed', event.key)
+      this.props.addRandomSquare()
+    }
+    if (event.key === 'ArrowDown') {
+      console.log('you just pressed', event.key)
+      this.props.addRandomSquare()
+    }
+    if (event.key === 'ArrowDown') {
+      console.log('you just pressed', event.key)
+      this.props.addRandomSquare()
+    }
+    if (event.key === 'ArrowDown') {
+      console.log('you just pressed', event.key)
+      this.props.addRandomSquare()
     }
   }
 

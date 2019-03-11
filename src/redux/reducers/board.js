@@ -51,7 +51,7 @@ const boardReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_NEW':
       const result = matrix.addNewNumber()
-      console.log(result)
+    //   console.log(result)
       return {
           ...state, ...result
       }
