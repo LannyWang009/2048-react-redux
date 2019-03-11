@@ -6,8 +6,7 @@ class App extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      board: props.board,
-      score: props.score
+      board: props.board
     }
     this.handler = this.handler.bind(this)
   }
@@ -19,7 +18,7 @@ class App extends Component {
       console.log('you just pressed', event.key)
       this.props.addRandomSquare()
     }
-    if (event.key === 'ArrowDown') {
+    if (event.key === 'ArrowRight') {
       console.log('you just pressed', event.key)
       this.props.addRandomSquare()
     }
@@ -27,7 +26,7 @@ class App extends Component {
       console.log('you just pressed', event.key)
       this.props.addRandomSquare()
     }
-    if (event.key === 'ArrowDown') {
+    if (event.key === 'ArrowLeft') {
       console.log('you just pressed', event.key)
       this.props.addRandomSquare()
     }
@@ -53,7 +52,9 @@ const mapStateToProps = (state) => (
 
 const mapDispatchToProps = (dispatch) => ({
   addRandomSquare: () => dispatch({ type: 'ADD_NEW' }),
-  score: () => dispatch({ type: 'ADD_NEW' })
+  score: () => dispatch({ type: 'ADD_NEW' }),
+  setNewGame:() => dispatch({type:'RESTART'})
+
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

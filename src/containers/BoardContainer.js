@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import Row from '../components/Row'
+
 
 class BoardContainer extends Component {
   // static propTypes = {
@@ -11,7 +10,6 @@ class BoardContainer extends Component {
 
   constructor (props) {
     super(props)
-
     this.state = {
       board: props.board
     }
@@ -19,7 +17,7 @@ class BoardContainer extends Component {
 
   render () {
     return (
-      <div>
+      <div className='gameBoard'>
         {this.props.board.map((row, i) => (
           <div key={i} className='row'>
             {row.map((col, j) => (

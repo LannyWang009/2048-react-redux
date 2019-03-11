@@ -43,6 +43,12 @@ class Matrix {
         return {board: newboard}
       }
 
+      restart = () => {
+        // const 
+        // return {board:}
+        
+      }
+
       isBoardMoved = (oldBoard, newBoard) => {
           return (JSON.stringify(oldBoard) !== JSON.stringify(newBoard))
       }
@@ -177,12 +183,13 @@ const boardReducer = (state = initialState, action) => {
 
   switch (action.type) {
     case 'ADD_NEW':
-      const result = matrix.addNewNumber()
-    //   console.log(result)
+      let result = matrix.addNewNumber()
       return {
           ...state, ...result
       }
-    
+    case 'RESTART':
+      // let newboard = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+      return initialState
     default:
       return state
   }

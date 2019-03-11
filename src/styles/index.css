@@ -31,10 +31,18 @@ code {
   color: #61dafb;
 }
 
+.gameHeader {
+  margin:10px auto;
+}
+
+.gameBoard {
+  margin:30px auto;
+}
+
 .cell {
   background-color: lightgray;
-  width:  180px;
-  height: 180px;
+  width:  15vw;
+  height: 15vw;
   border: 5px solid grey;
   color:#a5adb0;
   font-size:100px;
