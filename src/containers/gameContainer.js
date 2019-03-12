@@ -1,19 +1,19 @@
 import React, { Component } from 'react'
 import BoardContainer from './BoardContainer'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 
 // import Heading from '../components/Heading'
 export class GameContainer extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
-  
+
     this.state = {
-       board: props.board
+      board: props.board
     }
     this.handleRestart = this.handleRestart.bind(this)
   }
-  
-  handleRestart=()=>{
+
+  handleRestart () {
     console.log('you pressed new game')
     this.props.setNewGame()
   }
@@ -30,13 +30,12 @@ export class GameContainer extends Component {
   }
 }
 
-
 const mapStateToProps = (state) => (
-  { board: state.board.board, score: state.board.score, bestScore:state.board.bestScore }
+  { board: state.board.board, score: state.board.score, bestScore: state.board.bestScore }
 )
 
 const mapDispatchToProps = (dispatch) => ({
-  setNewGame:() => dispatch({type:'RESTART'})
+  setNewGame: () => dispatch({ type: 'RESTART' })
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameContainer)

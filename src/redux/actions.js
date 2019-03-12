@@ -1,48 +1,208 @@
-// import React, { Component } from 'react'
+export default class Matrix {
+  constructor ({ board, score, bestScore, gameOver, isMoved }) {
+    this.board = JSON.parse(JSON.stringify(board))
+    this.score = score
+    this.bestScore = bestScore
+    this.gameOver = gameOver
+    this.isMoved = isMoved
 
-// export default class Actions extends Component {
-//   constructor ({ matrix, score, bestScore, isSuccess, isMoved }) {
-//     super({ matrix, score, bestScore, isSuccess, isMoved })
-//     this.matrix = JSON.parse(JSON.stringify(matrix))
-//     this.score = score
-//     this.bestScore = bestScore
-//     this.isSuccess = isSuccess
-//     this.isMoved = isMoved
-//   }
+    // this.combineNumToLeft=this.combineNumToLeft.bind(this)
+  }
 
-//   hardcopy (x) {
-//     return JSON.parse(JSON.stringify(x))
-//   }
+  getBlankCordinates () {
+    // this takes in this.state.board, returns an array of blank coordinates
+    const { board } = this
+    const blankCoordinates = []
+    for (let row = 0; row < board.length; row++) {
+      for (let col = 0; col < board[row].length; col++) {
+        if (board[row][col] === 0) { blankCoordinates.push([row, col]) }
+      }
+    }
+    return blankCoordinates
+  }
 
-//   getEmptyCoordinates () {
-//     const coordinates = []
-//     const matrix = this.matrix
-//     for (let row = 0; row < matrix.length; row++) {
-//       for (let col = 0; col < matrix.length; col++) {
-//         const val = matrix[row][col]
-//         if (val === 0) {
-//           coordinates.push([row, col])
-//         }
-//       }
-//     }
-//     console.log('coordinates,', coordinates)
-//     return coordinates
-//   }
+  getRandomNumber (arr) {
+    // it returns a random index in the array
+    let r = Math.floor(Math.random() * arr.length)
+    return arr[r]
+  }
 
-//   getRandom (arr) {
-//     return arr[Math.round(Math.random() * (arr.length - 1))]
-//   }
+  addNewNumber () {
+    const { board } = this
+    const newboard = JSON.parse(JSON.stringify(board))
+    const emptyCordinates = this.getBlankCordinates()
+    const cor = this.getRandomNumber(emptyCordinates)
+    newboard[cor[0]][cor[1]] = 2
+    this.board = newboard
+    return { board: newboard }
+  }
 
-//   isBoardMoved (previousMatrix, newMatrix) {
-//     return (JSON.stringify(previousMatrix) !== JSON.stringify(newMatrix))
-//   }
+  isBoardMoved (oldBoard, newBoard) {
+    return (JSON.stringify(oldBoard) !== JSON.stringify(newBoard))
+  }
 
-//   checkisSuccess = matrix => {
-//       deepcopy(matrix)
-//   }
-//   // get random function
+  rotateClockwise () {
+    // Find transpose of matrix.
+    // Reverse rows of the transpose.
+    const { board } = this
+    const newBoard = []
+    const L = board.length
+    for (let col = 0; col < L; col++) {
+      const newRow = []
+      for (let row = L; row >= 0; row--) {
+        newRow.push(board[row][col])
+      }
+      newBoard.push(newRow)
+    }
+    this.board = newBoard
+    return newBoard
+  }
 
-//   // check whether the board moved
+  rotateAntiClock () {
+    // Find transpose of matrix.
+    // Reverse columns of the transpose.
+    const { board } = this
+    const newBoard = []
+    const L = board.length
+    for (let col = L - 1; col >= 0; col--) {
+      const newRow = []
+      for (let row = L - 1; row >= 0; row--) {
+        newRow.unshift(board[row][col])
+      }
+      newBoard.push(newRow)
+    }
+    this.board = newBoard
+    return newBoard
+  }
 
-//   // check if
-// }
+  shiftRight () {
+    // push all numbers to the right
+    const { board } = this
+    const newBoard = []
+    const L = board.length
+
+    // Shift all numbers to the right
+    for (let row = 0; row < L; row++) {
+      const boardRow = []
+      for (let col = 0; col < board[row].length; col++) {
+        const current = board[row][col]
+        if (current === 0) {
+          boardRow.unshift(current)
+        } else {
+          boardRow.push(current)
+        }
+      }
+      newBoard.push(boardRow)
+    }
+    this.board = newBoard
+    return newBoard
+  }
+
+  shiftLeft () {
+    const { board } = this
+    const newBoard = []
+    const len = board.length
+    for (let r = 0; r < len; r++) {
+      const newRow = []
+      for (let c = board[r].length - 1; c >= 0; c--) {
+        const current = board[r][c]
+        if (current === 0) newRow.push(current)
+        else newRow.unshift(current)
+      }
+      newBoard.push(newRow)
+    }
+    this.board = newBoard
+    return newBoard
+  };
+
+  combineNumToLeft () {
+    const { board } = this
+    const len = board.length
+    let newboard = []
+
+    for (let row = 0; row < len; row++) {
+      for (let col = 0; col < len; col++) {
+        if (board[row][col] > 0 && board[row][col] === board[row][col + 1]) {
+          board[row][col] *= 2
+          board[row][col + 1] = 0
+          this.score += board[row][col]
+        } else if (board[row][col] === 0 && board[row][col + 1] > 0) {
+          board[row][col] = board[row][col + 1]
+          board[row][col + 1] = 0
+        }
+      }
+    }
+    this.board = newboard
+    return newboard
+  };
+
+  combineNumToRight () {
+    const { board } = this
+    const len = board.length
+    // Combine numbers and shift to right
+    for (let row = 0; row < len; row++) {
+      for (let col = board[row].length - 1; col >= 0; col--) {
+        if (board[row][col] > 0 && board[row][col] === board[row][col - 1]) {
+          board[row][col] *= 2
+          board[row][col - 1] = 0
+          this.score += board[row][col]
+        } else if (board[row][col] === 0 && board[row][col - 1] > 0) {
+          board[row][col] = board[row][col - 1]
+          board[row][col - 1] = 0
+        }
+      }
+    }
+    this.board = board
+    return board
+  };
+
+  move (callback) {
+    const prevBoard = JSON.parse(JSON.stringify(this.board))
+    callback()
+
+    const { board, score, bestScore } = this
+    const isMoved = this.isBoardMoved(prevBoard, board)
+    const newstate = {
+      board,
+      score,
+      bestScore: score > bestScore ? score : bestScore,
+      isMoved
+    }
+    if (isMoved) {
+      newstate.prevBoard = prevBoard
+    }
+    return newstate
+  };
+
+  moveUp () {
+    this.move(() => {
+      this.rotateClockwise()
+      this.shiftRight()
+      this.combineNumToRight()
+      this.rotateAntiClock()
+    })
+  }
+
+  moveDown () {
+    this.move(() => {
+      this.rotateClockwise()
+      this.shiftLeft()
+      this.combineNumToLeft()
+      this.rotateAntiClock()
+    })
+  }
+
+  moveLeft () {
+    this.move(() => {
+      this.shiftLeft()
+      this.combineNumToLeft()
+    })
+  }
+
+  moveRight () {
+    this.move(() => {
+      this.shiftRight()
+      this.combineNumToRight()
+    })
+  }
+}

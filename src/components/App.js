@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import GameContainer from '../containers/GameContainer'
+import GameContainer from '../containers/gameContainer'
 import { connect } from 'react-redux'
 
 class App extends Component {
@@ -53,7 +53,7 @@ const mapStateToProps = (state) => (
 const mapDispatchToProps = (dispatch) => ({
   addRandomSquare: () => dispatch({ type: 'ADD_NEW' }),
   score: () => dispatch({ type: 'ADD_NEW' }),
-  setNewGame:() => dispatch({type:'RESTART'})
+  setNewGame: () => dispatch({ type: 'RESTART' })
 
 })
 
