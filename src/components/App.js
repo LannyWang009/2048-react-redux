@@ -13,6 +13,9 @@ class App extends Component {
 
   handler (event) {
     // console.log(event.key)
+    if (event.key === 'Alt') {
+      this.props.testBoard()
+    }
     if (event.key === 'ArrowUp') {
       // console.log(this.props.board)
       console.log('you just pressed', event.key)
@@ -52,8 +55,8 @@ const mapStateToProps = (state) => (
 
 const mapDispatchToProps = (dispatch) => ({
   addRandomSquare: () => dispatch({ type: 'ADD_NEW' }),
-  score: () => dispatch({ type: 'ADD_NEW' }),
-  setNewGame: () => dispatch({ type: 'RESTART' })
+  testBoard: () => dispatch({ type: 'TEST_NUMBERS' })
+  // setNewGame: () => dispatch({ type: 'RESTART' })
 
 })
 

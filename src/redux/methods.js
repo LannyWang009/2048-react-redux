@@ -1,32 +1,28 @@
-deepcopy (x) {
-    y = JSON.parse(JSON.stringify(x))
-    return y
+function deepcopy (x) {
+  return JSON.parse(JSON.stringify(x))
 }
 
-getBlankCordinates (board) {
-    // this takes in this.state.board, returns an array of blank coordinates
-    
-    const blankCoordinates = []
-    for (let row = 0; row < board.length; row++) {
-      for (let col = 0; col < board[row].length; col++) {
-        if (board[row][col] === 0) { blankCoordinates.push([row, col]) }
-      }
+function getBlankCordinates (board) {
+  // this takes in this.state.board, returns an array of blank coordinates
+  const blankCoordinates = []
+  for (let row = 0; row < board.length; row++) {
+    for (let col = 0; col < board[row].length; col++) {
+      if (board[row][col] === 0) { blankCoordinates.push([row, col]) }
     }
-    return blankCoordinates
   }
+  return blankCoordinates
+}
 
-getRandomNumber (arr) {
-    // it returns a random index in the array
-    let r = Math.floor(Math.random() * arr.length)
-    return arr[r]
-  }
+function getRandomNumber (arr) {
+  // it returns a random index in the array
+  let r = Math.floor(Math.random() * arr.length)
+  return arr[r]
+}
 
-addNewNumber (board) {
-    
-    const newboard = JSON.parse(JSON.stringify(board))
-    const emptyCordinates = this.getBlankCordinates()
-    const cor = this.getRandomNumber(emptyCordinates)
-    newboard[cor[0]][cor[1]] = 2
-    this.board = newboard
-    return { board: newboard }
-  }
+function addNewNumber (board) {
+  const newboard = deepcopy(board)
+  const emptyCordinates = getBlankCordinates(board)
+  const cor = getRandomNumber(emptyCordinates)
+  newboard[cor[0]][cor[1]] = 2
+  return newboard
+}
