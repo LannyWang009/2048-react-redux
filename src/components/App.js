@@ -13,20 +13,33 @@ class App extends Component {
 
   handler (event) {
     // console.log(event.key)
+    if (event.key === 'Alt') {
+      console.log('===========================')
+      this.props.testBoard()
+    }
     if (event.key === 'ArrowUp') {
       // console.log(this.props.board)
+      console.log('===========================')
       console.log('you just pressed', event.key)
-      this.props.addRandomSquare()
+      this.props.moveUp()
     }
     if (event.key === 'ArrowRight') {
+      console.log('===========================')
       console.log('you just pressed', event.key)
-      this.props.addRandomSquare()
+      this.props.moveRight()
     }
     if (event.key === 'ArrowDown') {
+      console.log('===========================')
       console.log('you just pressed', event.key)
-      this.props.addRandomSquare()
+      this.props.moveDown()
     }
     if (event.key === 'ArrowLeft') {
+      console.log('===========================')
+      console.log('you just pressed', event.key)
+      this.props.moveLeft()
+    }
+    if (event.key === 'Enter') {
+      console.log('===========================')
       console.log('you just pressed', event.key)
       this.props.addRandomSquare()
     }
@@ -52,8 +65,13 @@ const mapStateToProps = (state) => (
 
 const mapDispatchToProps = (dispatch) => ({
   addRandomSquare: () => dispatch({ type: 'ADD_NEW' }),
-  score: () => dispatch({ type: 'ADD_NEW' }),
-  setNewGame: () => dispatch({ type: 'RESTART' })
+  testBoard: () => dispatch({ type: 'TEST_NUMBERS' }),
+  moveRight: () => dispatch({ type: 'RIGHT' }),
+  moveLeft: () => dispatch({ type: 'LEFT' }),
+  moveUp: () => dispatch({ type: 'UP' }),
+  moveDown: () => dispatch({ type: 'DOWN' })
+
+  // setNewGame: () => dispatch({ type: 'RESTART' })
 
 })
 

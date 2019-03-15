@@ -22,7 +22,7 @@ export class GameContainer extends Component {
       <div className='gameContainer container'>
         <p>Use arrow keys to join squares to make 2048</p>
         <div className='gameHeader'>
-          <button className='button is-warning' onClick={this.handleRestart}>New Game</button> <button className='button is-info is-outlined'>Score:</button> <button className='button is-info is-outlined'>Best Score:</button>
+          <button className='button is-warning' onClick={this.handleRestart}>New Game</button> <button className='button is-info is-outlined'>Score: {this.props.score}</button> <button className='button is-info is-outlined'>Best Score:</button>
         </div>
         <BoardContainer />
       </div>

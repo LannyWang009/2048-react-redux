@@ -71,37 +71,49 @@ code {
 }
 
 .block-value-8 {
-  background-color:#A4CE00
+  background-color:#FFC300
+  
 }
 
 .block-value-16 {
-  background-color:#80A100
+  
+  background-color:#8A4ECE;
+  font-size:80px;
 }
 
 .block-value-32 {
-  background-color:#A88000
-}
-
-.block-value-64 {
+  font-size:70px;
   background-color:#D7A400
 }
 
-.block-value-128 {
-  background-color:#FFC300
+.block-value-64 {
+  font-size:60px;
+  background-color:#A4CE00
 }
 
+.block-value-128 {
+  font-size:50px;
+  background-color:#80A100
+  
+}
+  
+
 .block-value-256 {
+  font-size:50px;
   background-color:#600BC0
 }
 
 .block-value-512 {
-  background-color:#8A4ECE
+  font-size:50px;
+  background-color:#A88000
 }
 
 .block-value-1024 {
+  font-size:40px;
   background-color:#480891
 }
 
 .block-value-2048 {
+  font-size:30px;
   background-color:#380571
 }

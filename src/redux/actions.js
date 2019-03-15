@@ -30,9 +30,33 @@ export default class Matrix {
   addNewNumber () {
     const { board } = this
     const newboard = JSON.parse(JSON.stringify(board))
+    // if the game is over, don't change the board
+    if (this.gameOver) { return { board } }
+
+    // if the board is moved and the board is filled, turn game over, don't change the board
+    if (!this.isMoved) {
+      if (this.checkGameOver(newboard)) {
+        this.gameOver = true
+        return { gameOver: true }
+      }
+      return { board }
+    }
+    // if there is no blank space, turn on gameOver state
     const emptyCordinates = this.getBlankCordinates()
+    if (emptyCordinates.length === 0) {
+      if (this.checkGameOver(newboard)) {
+        this.gameOver = true
+        return { gameOver: true }
+      }
+      return { board }
+    }
+    // else add a new square
     const cor = this.getRandomNumber(emptyCordinates)
     newboard[cor[0]][cor[1]] = 2
+    if (this.checkGameOver(newboard)) {
+      this.gameOver = true
+      return { gameOver: true, board: newboard }
+    }
     this.board = newboard
     return { board: newboard }
   }
@@ -49,7 +73,7 @@ export default class Matrix {
     const L = board.length
     for (let col = 0; col < L; col++) {
       const newRow = []
-      for (let row = L; row >= 0; row--) {
+      for (let row = L - 1; row >= 0; row--) {
         newRow.push(board[row][col])
       }
       newBoard.push(newRow)
@@ -58,7 +82,7 @@ export default class Matrix {
     return newBoard
   }
 
-  rotateAntiClock () {
+  rotateCounterClock () {
     // Find transpose of matrix.
     // Reverse columns of the transpose.
     const { board } = this
@@ -156,9 +180,28 @@ export default class Matrix {
     return board
   };
 
-  move (callback) {
+  move () {
     const prevBoard = JSON.parse(JSON.stringify(this.board))
-    callback()
+    const { board, score, bestScore } = this
+    const isMoved = this.isBoardMoved(prevBoard, board)
+    const newstate = {
+      board,
+      score,
+      bestScore: score > bestScore ? score : bestScore,
+      isMoved
+    }
+    if (isMoved) {
+      newstate.prevBoard = prevBoard
+    }
+    return newstate
+  }
+
+  moveUp () {
+    const prevBoard = JSON.parse(JSON.stringify(this.board))
+    this.rotateClockwise()
+    this.shiftRight()
+    this.combineNumToRight()
+    this.rotateCounterClock()
 
     const { board, score, bestScore } = this
     const isMoved = this.isBoardMoved(prevBoard, board)
@@ -172,37 +215,45 @@ export default class Matrix {
       newstate.prevBoard = prevBoard
     }
     return newstate
-  };
-
-  moveUp () {
-    this.move(() => {
-      this.rotateClockwise()
-      this.shiftRight()
-      this.combineNumToRight()
-      this.rotateAntiClock()
-    })
   }
 
   moveDown () {
-    this.move(() => {
-      this.rotateClockwise()
-      this.shiftLeft()
-      this.combineNumToLeft()
-      this.rotateAntiClock()
-    })
+    this.rotateClockwise()
+    this.shiftLeft()
+    this.combineNumToLeft()
+    this.rotateCounterClock()
+    this.move()
   }
 
   moveLeft () {
-    this.move(() => {
-      this.shiftLeft()
-      this.combineNumToLeft()
-    })
+    this.shiftLeft()
+    this.combineNumToLeft()
+    this.move()
   }
 
   moveRight () {
-    this.move(() => {
-      this.shiftRight()
-      this.combineNumToRight()
-    })
+    this.shiftRight()
+    console.log('before move', this.board)
+    this.shiftRight()
+    console.log('after(shiftRight),', this.board)
+    this.combineNumToRight()
+    console.log('after(combineRight),', this.board)
+    this.move()
+  }
+  checkGameOver (board) {
+    const boardCopy = JSON.parse(JSON.stringify(board))
+    const check = foo => {
+      this.board = boardCopy
+      const isMoved = this.isBoardMoved(boardCopy, foo().board)
+      //   this.board = boardCopy
+      return isMoved
+    }
+    const moves = [
+      check(this.moveUp),
+      check(this.moveDown),
+      check(this.moveRight),
+      check(this.moveLeft)
+    ]
+    return !moves.includes(true)
   }
 }
