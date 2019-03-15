@@ -1,6 +1,6 @@
-
+let randomNewBoard = addNewNumber(addNewNumber([[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]))
 const initialState = {
-  board: [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+  board: randomNewBoard,
   score: 0,
   // bestScore: 0,
   gameOver: false
@@ -129,6 +129,7 @@ function rotateRight (board) {
   let newboard = []
   for (let col = 0; col < board.length; col++) {
     const newRow = []
+    // swap rows
     for (let row = board[col].length - 1; row >= 0; row--) {
       newRow.push(board[row][col])
     }
@@ -138,14 +139,16 @@ function rotateRight (board) {
 }
 
 function rotateLeft (board) {
+  // transpose and swap columns
   let newboard = []
-  for (let col = board.length - 1; col > 0; col--) {
+  for (let col = board.length - 1; col >= 0; col--) {
     const newRow = []
     for (let row = board[col].length - 1; row >= 0; row--) {
       newRow.unshift(board[row][col])
     }
     newboard.push(newRow)
   }
+  return newboard
 }
 
 function moveRight (board, score, gameOver) {
@@ -198,13 +201,41 @@ function moveLeft (board, score, gameOver) {
 
 function moveUp (board, score, gameOver) {
   let boardcopy = deepCopy(board)
+  boardcopy = rotateRight(boardcopy)
   boardcopy = shiftMatrixRight(boardcopy)
   boardcopy = merge2Right(boardcopy, score).board
   score = merge2Right(boardcopy, score).score
+  boardcopy = rotateLeft(boardcopy)
   // if this changes the board, add a new square
-  console.log('board,', board)
-  console.log('boardcopy,', boardcopy)
-  console.log('isMoved', isMoved(board, boardcopy))
+  // console.log('board,', board)
+  // console.log('boardcopy,', boardcopy)
+  // console.log('isMoved', isMoved(board, boardcopy))
+  if (isMoved(board, boardcopy)) {
+    boardcopy = addNewNumber(boardcopy)
+    // check if the game is over
+    if (getBlankCordinates(boardcopy).length === 0) {
+      gameOver = true
+    // TO DO: show a fail message and reset the game
+    } else {
+      gameOver = false
+      return { boardcopy, score, gameOver }
+    }
+  } else {
+    return { boardcopy, score, gameOver }
+  }
+}
+
+function moveDown (board, score, gameOver) {
+  let boardcopy = deepCopy(board)
+  boardcopy = rotateRight(boardcopy)
+  boardcopy = shiftMatrixLeft(boardcopy)
+  boardcopy = merge2Left(boardcopy, score).board
+  score = merge2Left(boardcopy, score).score
+  boardcopy = rotateLeft(boardcopy)
+  // if this changes the board, add a new square
+  // console.log('board,', board)
+  // console.log('boardcopy,', boardcopy)
+  // console.log('isMoved', isMoved(board, boardcopy))
   if (isMoved(board, boardcopy)) {
     boardcopy = addNewNumber(boardcopy)
     // check if the game is over
@@ -239,15 +270,16 @@ const boardReducer = (state = initialState, action) => {
       return {
         ...state, board: result2048
       }
-      // case 'UP':
-      //   const resultUp = matrix.moveUp()
-      //   return {
-      //     ...state, ...resultUp
-      //   }
 
-      // case 'DOWN':
-      //   const resultDown = matrix.moveDown()
-      //   return { ...state, ...resultDown }
+    case 'UP':
+      const resultUp = moveUp(board, score, gameOver)
+      return {
+        ...state, board: resultUp.boardcopy, score: resultUp.score
+      }
+
+    case 'DOWN':
+      const resultDown = moveDown(board, score, gameOver)
+      return { ...state, board: resultDown.boardcopy, score: resultDown.score }
 
     case 'RIGHT':
       const resultRight = moveRight(board, score, gameOver)

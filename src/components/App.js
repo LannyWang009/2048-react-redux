@@ -67,7 +67,10 @@ const mapDispatchToProps = (dispatch) => ({
   addRandomSquare: () => dispatch({ type: 'ADD_NEW' }),
   testBoard: () => dispatch({ type: 'TEST_NUMBERS' }),
   moveRight: () => dispatch({ type: 'RIGHT' }),
-  moveLeft: () => dispatch({ type: 'LEFT' })
+  moveLeft: () => dispatch({ type: 'LEFT' }),
+  moveUp: () => dispatch({ type: 'UP' }),
+  moveDown: () => dispatch({ type: 'DOWN' })
+
   // setNewGame: () => dispatch({ type: 'RESTART' })
 
 })

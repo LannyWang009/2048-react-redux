@@ -71,28 +71,32 @@ code {
 }
 
 .block-value-8 {
-  background-color:#A4CE00
+  background-color:#FFC300
+  
 }
 
 .block-value-16 {
-  background-color:#80A100;
+  
+  background-color:#8A4ECE;
   font-size:80px;
 }
 
 .block-value-32 {
   font-size:70px;
-  background-color:#A88000
+  background-color:#D7A400
 }
 
 .block-value-64 {
   font-size:60px;
-  background-color:#D7A400
+  background-color:#A4CE00
 }
 
 .block-value-128 {
   font-size:50px;
-  background-color:#FFC300
+  background-color:#80A100
+  
 }
+  
 
 .block-value-256 {
   font-size:50px;
@@ -101,7 +105,7 @@ code {
 
 .block-value-512 {
   font-size:50px;
-  background-color:#8A4ECE
+  background-color:#A88000
 }
 
 .block-value-1024 {
