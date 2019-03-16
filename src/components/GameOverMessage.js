@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
-import BoardContainer from './BoardContainer'
 import { connect } from 'react-redux'
-import GameOverMessage from '../components/GameOverMessage'
 
-// import Heading from '../components/Heading'
-export class GameContainer extends Component {
+class GameOverMessage extends Component {
   constructor (props) {
     super(props)
 
@@ -20,18 +17,16 @@ export class GameContainer extends Component {
     console.log('you pressed new game')
     this.props.setNewGame()
   }
+
   render () {
-    return (
-      <div className='gameContainer container'>
-
-        <div className='gameHeader'>
-          <button className='button is-danger' onClick={this.handleRestart}>New Game</button> <span className='button is-primary is-outlined'>Score: {this.props.score}</span>
+    if (this.state.gameOverMessage) {
+      return (
+        <div className='gameOverMessage notification is-danger'>
+          <button className='delete' onClick={this.handleRestart} />
+          {this.props.gameOverMessage}
         </div>
-        <GameOverMessage />
-
-        <BoardContainer />
-      </div>
-    )
+      )
+    } else { return null }
   }
 }
 
@@ -43,4 +38,4 @@ const mapDispatchToProps = (dispatch) => ({
   setNewGame: () => dispatch({ type: 'RESTART' })
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(GameContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(GameOverMessage)

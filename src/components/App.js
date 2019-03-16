@@ -49,9 +49,9 @@ class App extends Component {
     return (
       <div className='App' tabIndex='0' onKeyDown={this.handler}>
         <header className='App-header'>
-          <p>
+          <h1>
            2048 Game
-          </p>
+          </h1>
         </header>
         <GameContainer />
       </div>

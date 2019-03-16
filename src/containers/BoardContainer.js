@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 // import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-
 class BoardContainer extends Component {
   // static propTypes = {
   //   board:PropTypes.arrayOf(propTypes.array).isRequired
