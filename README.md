@@ -24,7 +24,7 @@ Restart button
 - Win condition: 2048 is created
 - Lose condition: no empty space on board
 
-![Game Logic]([https://github.com/LannyWang009/2048-react-redux/public/img/gamelogic.jpg])
+![Game Logic](https://github.com/LannyWang009/2048-react-redux/blob/master/public/img/gamelogic.jpg?raw=true)
 
 
 Need to :
