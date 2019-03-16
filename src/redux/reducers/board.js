@@ -177,15 +177,15 @@ function moveRight (board, score, gameOverMessage) {
 
 function moveLeft (board, score, gameOverMessage) {
   let boardcopy = deepCopy(board)
-  boardcopy = shiftMatrixLeft(board)
-  console.log('shiftleft result', boardcopy)
-  boardcopy = merge2Left(boardcopy, score).board
-  console.log('merge2left,', boardcopy)
-  score = merge2Left(boardcopy, score).score
+  let boardcopy1 = shiftMatrixLeft(board)
+  console.log('shiftleft result', boardcopy1)
+  let boardcopy2 = merge2Left(boardcopy1, score).board
+  console.log('merge2left,', boardcopy2)
+  score = merge2Left(boardcopy2, score).score
   console.log('merge2left', score)
   // if this changes the board, add a new square
   console.log('board,', board)
-  console.log('boardcopy,', boardcopy)
+  console.log('boardcopy,', boardcopy2)
   console.log('isMoved', isMoved(board, boardcopy))
   if (isMoved(board, boardcopy)) {
     boardcopy = addNewNumber(boardcopy)
