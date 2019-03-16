@@ -6,3 +6,4 @@ User can use arrow keys to push and merge the number squares in four directions.
 Need to :
 1) fix the mergeleft(shiftMatrixLeft) bug with score
 2) deployment error on github
+3) add the local storage and mount to lifecycle functions
