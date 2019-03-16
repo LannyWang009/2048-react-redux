@@ -3,7 +3,7 @@ const initialState = {
   board: randomNewBoard,
   score: 0,
   // bestScore: 0,
-  gameOver: false
+  gameOverMessage: null
   // isMoved: true
 }
 
@@ -99,7 +99,7 @@ function merge2Right (board, score) {
     for (let row = board[col].length - 1; row > 0; row--) {
       if (board[col][row] > 0 && board[col][row] === board[col][row - 1]) {
         board[col][row] = 2 * board[col][row]
-        score = score + board[col][row] * 10
+        score = score + board[col][row]
         board[col][row - 1] = 0
         board[col] = shiftRowRight(board[col])
       }
@@ -114,7 +114,7 @@ function merge2Left (board, score) {
     for (let row = 0; row < board[col].length; row++) {
       if (board[col][row] > 0 && board[col][row] === board[col][row + 1]) {
         board[col][row] = 2 * board[col][row]
-        score = score + 2 * board[col][row]
+        score = score + board[col][row]
         board[col][row + 1] = 0
         board[col] = shiftRowLeft(board[col])
       }
@@ -151,7 +151,7 @@ function rotateLeft (board) {
   return newboard
 }
 
-function moveRight (board, score, gameOver) {
+function moveRight (board, score, gameOverMessage) {
   let boardcopy = deepCopy(board)
   boardcopy = shiftMatrixRight(boardcopy)
   boardcopy = merge2Right(boardcopy, score).board
@@ -164,22 +164,25 @@ function moveRight (board, score, gameOver) {
     boardcopy = addNewNumber(boardcopy)
     // check if the game is over
     if (getBlankCordinates(boardcopy).length === 0) {
-      gameOver = true
+      gameOverMessage = 'You lost the game.'
     // TO DO: show a fail message and reset the game
     } else {
-      gameOver = false
-      return { boardcopy, score, gameOver }
+      gameOverMessage = null
+      return { boardcopy, score, gameOverMessage }
     }
   } else {
-    return { boardcopy, score, gameOver }
+    return { boardcopy, score, gameOverMessage }
   }
 }
 
-function moveLeft (board, score, gameOver) {
+function moveLeft (board, score, gameOverMessage) {
   let boardcopy = deepCopy(board)
-  boardcopy = shiftMatrixLeft(boardcopy)
+  boardcopy = shiftMatrixLeft(board)
+  console.log('shiftleft result', boardcopy)
   boardcopy = merge2Left(boardcopy, score).board
+  console.log('merge2left,', boardcopy)
   score = merge2Left(boardcopy, score).score
+  console.log('merge2left', score)
   // if this changes the board, add a new square
   console.log('board,', board)
   console.log('boardcopy,', boardcopy)
@@ -188,18 +191,18 @@ function moveLeft (board, score, gameOver) {
     boardcopy = addNewNumber(boardcopy)
     // check if the game is over
     if (getBlankCordinates(boardcopy).length === 0) {
-      gameOver = true
+      gameOverMessage = 'You lost the game'
     // TO DO: show a fail message and reset the game
     } else {
-      gameOver = false
-      return { boardcopy, score, gameOver }
+      gameOverMessage = null
+      return { boardcopy, score, gameOverMessage }
     }
   } else {
-    return { boardcopy, score, gameOver }
+    return { boardcopy, score, gameOverMessage }
   }
 }
 
-function moveUp (board, score, gameOver) {
+function moveUp (board, score, gameOverMessage) {
   let boardcopy = deepCopy(board)
   boardcopy = rotateRight(boardcopy)
   boardcopy = shiftMatrixRight(boardcopy)
@@ -214,18 +217,18 @@ function moveUp (board, score, gameOver) {
     boardcopy = addNewNumber(boardcopy)
     // check if the game is over
     if (getBlankCordinates(boardcopy).length === 0) {
-      gameOver = true
+      gameOverMessage = 'You lost the game'
     // TO DO: show a fail message and reset the game
     } else {
-      gameOver = false
-      return { boardcopy, score, gameOver }
+      gameOverMessage = 'null'
+      return { boardcopy, score, gameOverMessage }
     }
   } else {
-    return { boardcopy, score, gameOver }
+    return { boardcopy, score, gameOverMessage }
   }
 }
 
-function moveDown (board, score, gameOver) {
+function moveDown (board, score, gameOverMessage) {
   let boardcopy = deepCopy(board)
   boardcopy = rotateRight(boardcopy)
   boardcopy = shiftMatrixLeft(boardcopy)
@@ -240,14 +243,14 @@ function moveDown (board, score, gameOver) {
     boardcopy = addNewNumber(boardcopy)
     // check if the game is over
     if (getBlankCordinates(boardcopy).length === 0) {
-      gameOver = true
+      gameOverMessage = 'You lost the game'
     // TO DO: show a fail message and reset the game
     } else {
-      gameOver = false
-      return { boardcopy, score, gameOver }
+      gameOverMessage = null
+      return { boardcopy, score, gameOverMessage }
     }
   } else {
-    return { boardcopy, score, gameOver }
+    return { boardcopy, score, gameOverMessage }
   }
 }
 
@@ -259,7 +262,7 @@ const boardReducer = (state = initialState, action) => {
   const stateCopy = deepCopy(state)
   let board = stateCopy.board
   let score = stateCopy.score
-  let gameOver = stateCopy.gameOver
+  let gameOverMessage = stateCopy.gameOverMessage
   switch (action.type) {
     case 'ADD_NEW':
       const resultAddnew = addNewNumber(board)
@@ -272,23 +275,23 @@ const boardReducer = (state = initialState, action) => {
       }
 
     case 'UP':
-      const resultUp = moveUp(board, score, gameOver)
+      const resultUp = moveUp(board, score, gameOverMessage)
       return {
         ...state, board: resultUp.boardcopy, score: resultUp.score
       }
 
     case 'DOWN':
-      const resultDown = moveDown(board, score, gameOver)
+      const resultDown = moveDown(board, score, gameOverMessage)
       return { ...state, board: resultDown.boardcopy, score: resultDown.score }
 
     case 'RIGHT':
-      const resultRight = moveRight(board, score, gameOver)
+      const resultRight = moveRight(board, score, gameOverMessage)
       console.log('result right', resultRight)
 
       return { ...state, board: resultRight.boardcopy, score: resultRight.score }
 
     case 'LEFT':
-      let resultLeft = moveLeft(board, score, gameOver)
+      let resultLeft = moveLeft(board, score, gameOverMessage)
       console.log('result left,', resultLeft)
       return { ...state, board: resultLeft.boardcopy, score: resultLeft.score }
 
