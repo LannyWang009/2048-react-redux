@@ -21,4 +21,3 @@ How I break down the game logic and wrote reducer rules
 
 - Win condition: 2048 is created
 - Lose condition: no empty space on board
-
