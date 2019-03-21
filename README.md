@@ -1,5 +1,5 @@
 # 2048 - React - Redux
-This is a front-end project of the game 2048 (originally created by Gabriele Cirulli) using React and Redux technologies. 
+This is a front-end project of the game [2048](http://2048game.com/) (originally created by Gabriele Cirulli) using React and Redux technologies. To play my game, [click here](https://lannywang009.github.io/2048-react-redux/). 
 
 # How to play
 The user will use arrowup, arrowdown, arrowright, and arrowleft to slide numbered tiles on a grid to combine them to create a tile with the number 2048. If all squares are occupied, the user loses the game. 
