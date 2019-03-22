@@ -17,6 +17,10 @@ class App extends Component {
       console.log('===========================')
       this.props.testBoard()
     }
+    if (event.key ==='a'){
+      console.log('This is my bug situation')
+      this.props.viewbug()
+    }
     if (event.key === 'ArrowUp') {
       // console.log(this.props.board)
       console.log('===========================')
@@ -69,7 +73,8 @@ const mapDispatchToProps = (dispatch) => ({
   moveRight: () => dispatch({ type: 'RIGHT' }),
   moveLeft: () => dispatch({ type: 'LEFT' }),
   moveUp: () => dispatch({ type: 'UP' }),
-  moveDown: () => dispatch({ type: 'DOWN' })
+  moveDown: () => dispatch({ type: 'DOWN' }),
+  viewbug:()=> dispatch({type:'BUG'})
 
   // setNewGame: () => dispatch({ type: 'RESTART' })
 
