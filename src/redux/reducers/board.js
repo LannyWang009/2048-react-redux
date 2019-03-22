@@ -165,6 +165,7 @@ function moveRight (board, score, gameOverMessage) {
     // check if the game is over
     if (getBlankCordinates(boardcopy).length === 0) {
       gameOverMessage = 'You lost the game.'
+      return { boardcopy, score, gameOverMessage }
     // TO DO: show a fail message and reset the game
     } else {
       gameOverMessage = null
@@ -192,6 +193,7 @@ function moveLeft (board, score, gameOverMessage) {
     // check if the game is over
     if (getBlankCordinates(boardcopy).length === 0) {
       gameOverMessage = 'You lost the game'
+      return { boardcopy, score, gameOverMessage }
     // TO DO: show a fail message and reset the game
     } else {
       gameOverMessage = null
@@ -218,6 +220,7 @@ function moveUp (board, score, gameOverMessage) {
     // check if the game is over
     if (getBlankCordinates(boardcopy).length === 0) {
       gameOverMessage = 'You lost the game'
+      return { boardcopy, score, gameOverMessage }
     // TO DO: show a fail message and reset the game
     } else {
       gameOverMessage = 'null'
@@ -230,23 +233,34 @@ function moveUp (board, score, gameOverMessage) {
 
 function moveDown (board, score, gameOverMessage) {
   let boardcopy = deepCopy(board)
-  boardcopy = rotateRight(boardcopy)
-  boardcopy = shiftMatrixLeft(boardcopy)
-  boardcopy = merge2Left(boardcopy, score).board
-  score = merge2Left(boardcopy, score).score
-  boardcopy = rotateLeft(boardcopy)
+  // console.log(boardcopy)
+  let boardcopy1 = rotateRight(boardcopy)
+  // console.log(boardcopy1)
+  let boardcopy2 = shiftMatrixLeft(boardcopy1)
+  // console.log(boardcopy2)
+  let boardcopy3 = merge2Left(boardcopy2, score).board
+  // console.log(boardcopy3)
+  score = merge2Left(boardcopy2, score).score
+  let boardcopy4 = rotateLeft(boardcopy3)
+  // console.log(boardcopy4)
   // if this changes the board, add a new square
   // console.log('board,', board)
   // console.log('boardcopy,', boardcopy)
   // console.log('isMoved', isMoved(board, boardcopy))
-  if (isMoved(board, boardcopy)) {
-    boardcopy = addNewNumber(boardcopy)
+  if (isMoved(board, boardcopy4)) {
+    let boardcopy = addNewNumber(boardcopy4)
+    // console.log(boardcopy5)
     // check if the game is over
     if (getBlankCordinates(boardcopy).length === 0) {
       gameOverMessage = 'You lost the game'
+      console.log('gameOverMessage')
     // TO DO: show a fail message and reset the game
+    return { boardcopy, score, gameOverMessage }
     } else {
       gameOverMessage = null
+      
+      console.log('gameOverMessage is null')
+      
       return { boardcopy, score, gameOverMessage }
     }
   } else {
@@ -273,6 +287,10 @@ const boardReducer = (state = initialState, action) => {
       return {
         ...state, board: result2048
       }
+
+    case 'BUG':
+      const resultBug = [[32,8,16,2],[64,16,4,16],[2,8,32,2],[2,2,4,32]]
+      return {...state, board:resultBug}
 
     case 'UP':
       const resultUp = moveUp(board, score, gameOverMessage)
