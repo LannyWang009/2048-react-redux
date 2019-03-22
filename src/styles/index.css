@@ -55,6 +55,8 @@ code {
   height: 14vw;
   min-width: 80px;
   min-height: 80px;
+  max-width:125px;
+  max-height:125px;
   border: 5px solid grey;
   color:white;
   font-size:66px;
