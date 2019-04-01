@@ -11,6 +11,7 @@ export class GameContainer extends Component {
     this.state = {
       board: props.board,
       score: props.score,
+      direction: props.direction,
       gameOverMessage: props.gameOverMessage
     }
     this.handleRestart = this.handleRestart.bind(this)
@@ -25,7 +26,13 @@ export class GameContainer extends Component {
       <div className='gameContainer container'>
 
         <div className='gameHeader'>
-          <button className='button is-danger' onClick={this.handleRestart}>New Game</button> <span className='button is-primary is-outlined'>Score: {this.props.score}</span>
+          <button className='button is-danger' onClick={this.handleRestart}>New Game</button> 
+          <a>
+            <span class="icon is-primary is-large is-outlined">
+              <i class={this.props.direction}></i>
+            </span>
+          </a>
+          <button className='button is-light is-outlined' disabled>Score: {this.props.score}</button>
         </div>
         <GameOverMessage />
 
@@ -36,7 +43,7 @@ export class GameContainer extends Component {
 }
 
 const mapStateToProps = (state) => (
-  { board: state.board.board, score: state.board.score, gameOverMessage: state.board.gameOverMessage }
+  { board: state.board.board, score: state.board.score, gameOverMessage: state.board.gameOverMessage, direction: state.board.direction }
 )
 
 const mapDispatchToProps = (dispatch) => ({

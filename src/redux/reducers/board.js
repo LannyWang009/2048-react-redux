@@ -3,8 +3,9 @@ const initialState = {
   board: randomNewBoard,
   score: 0,
   // bestScore: 0,
-  gameOverMessage: null
+  gameOverMessage: null,
   // isMoved: true
+  direction: null
 }
 
 // ============================================================================
@@ -309,20 +310,20 @@ const boardReducer = (state = initialState, action) => {
     case 'UP':
       const resultUp = moveUp(board, score, gameOverMessage)
       return {
-        ...state, board: resultUp.boardcopy, score: getSum(resultUp)
+        ...state, board: resultUp.boardcopy, score: getSum(resultUp), direction:'fas fa-arrow-circle-up is-light'
       }
 
     case 'DOWN':
       const resultDown = moveDown(board, score, gameOverMessage)
-      return { ...state, board: resultDown.boardcopy, score: getSum(resultDown) }
+      return { ...state, board: resultDown.boardcopy, score: getSum(resultDown), direction:'fas fa-arrow-circle-down is-light' }
 
     case 'RIGHT':
       const resultRight = moveRight(board, score, gameOverMessage)
-      return { ...state, board: resultRight.boardcopy, score: getSum(resultRight) }
+      return { ...state, board: resultRight.boardcopy, score: getSum(resultRight), direction:'fas fa-arrow-circle-right is-light' }
 
     case 'LEFT':
       let resultLeft = moveLeft(board, score, gameOverMessage)
-      return { ...state, board: resultLeft.boardcopy, score: getSum(resultLeft) }
+      return { ...state, board: resultLeft.boardcopy, score: getSum(resultLeft), direction:'fas fa-arrow-circle-left is-light' }
 
     case 'RESTART':
       return initialState
