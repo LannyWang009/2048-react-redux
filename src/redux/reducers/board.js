@@ -99,7 +99,7 @@ function merge2Right (board, score) {
     for (let row = board[col].length - 1; row > 0; row--) {
       if (board[col][row] > 0 && board[col][row] === board[col][row - 1]) {
         board[col][row] = 2 * board[col][row]
-        score = score + board[col][row]
+       
         board[col][row - 1] = 0
         board[col] = shiftRowRight(board[col])
       }
@@ -114,7 +114,7 @@ function merge2Left (board, score) {
     for (let row = 0; row < board[col].length; row++) {
       if (board[col][row] > 0 && board[col][row] === board[col][row + 1]) {
         board[col][row] = 2 * board[col][row]
-        score = score + board[col][row]
+        
         board[col][row + 1] = 0
         board[col] = shiftRowLeft(board[col])
       }
@@ -268,6 +268,19 @@ function moveDown (board, score, gameOverMessage) {
   }
 }
 
+function getSum(x) {
+  var sum = 0;
+  const board = x.boardcopy
+  for (let row = 0; row < board.length; row++) {
+    for (let col=0; col<board[row].length; col++) {
+      
+      sum = sum + board[row][col]
+      console.log('sum row col', sum, row, col, board[row][col])
+    }
+  }
+  console.log('sum', sum)
+  return sum 
+}
 // ===========================================
 // -REDUCER-
 // ===========================================
@@ -280,49 +293,40 @@ const boardReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_NEW':
       const resultAddnew = addNewNumber(board)
-      return { ...state, board: resultAddnew }
+      const resultScore = getSum(resultAddnew)
+      return { ...state, board: resultAddnew, score: resultScore }
 
     case 'TEST_NUMBERS':
       const result2048 = [[2, 4, 8, 16], [32, 64, 128, 256], [512, 1024, 2048, 0], [2, 4, 8, 16]]
       return {
-        ...state, board: result2048
+        ...state, board: result2048, score: getSum(result2048)
       }
 
     case 'BUG':
       const resultBug = [[32,8,16,2],[64,16,4,16],[2,8,32,2],[2,2,4,32]]
-      return {...state, board:resultBug}
+      return {...state, board:resultBug, score: getSum(resultBug)}
 
     case 'UP':
       const resultUp = moveUp(board, score, gameOverMessage)
       return {
-        ...state, board: resultUp.boardcopy, score: resultUp.score
+        ...state, board: resultUp.boardcopy, score: getSum(resultUp)
       }
 
     case 'DOWN':
       const resultDown = moveDown(board, score, gameOverMessage)
-      return { ...state, board: resultDown.boardcopy, score: resultDown.score }
+      return { ...state, board: resultDown.boardcopy, score: getSum(resultDown) }
 
     case 'RIGHT':
       const resultRight = moveRight(board, score, gameOverMessage)
-      console.log('result right', resultRight)
-
-      return { ...state, board: resultRight.boardcopy, score: resultRight.score }
+      return { ...state, board: resultRight.boardcopy, score: getSum(resultRight) }
 
     case 'LEFT':
       let resultLeft = moveLeft(board, score, gameOverMessage)
-      console.log('result left,', resultLeft)
-      return { ...state, board: resultLeft.boardcopy, score: resultLeft.score }
+      return { ...state, board: resultLeft.boardcopy, score: getSum(resultLeft) }
 
     case 'RESTART':
       return initialState
 
-    // case 'INIT':
-    //   if (action.board) {
-    //     return { ...state, ...action.board }
-    //   }
-    //   let resultI = matrix.addNewNumber().addNewNumber()
-    //   return { ...state, ...resultI
-    //   }
     default:
       return state
   }
