@@ -5,9 +5,9 @@ This is a front-end project of the game [2048](http://2048game.com/) (originally
 https://lannywang009.github.io/2048-react-redux/
 
 # How to play
-The user will use arrowup, arrowdown, arrowright, and arrowleft to slide numbered tiles on a grid to combine them to create a tile with the number 2048. If all squares are occupied, the user loses the game. 
+The user will use <strong> arrowup, arrowdown, arrowright, and arrowleft </strong> to slide numbered tiles on a grid to combine them to create a tile with the number 2048. If all squares are occupied, the user loses the game. 
 
-* For this game to be more intuitive to the user, animation and transition are necessary to indict the movement direction and to help user identify the newly generated square at random location. My version haven't added these transitions. I am not working on this project right now. 
+* For this game to be more intuitive to the user, animation and transition are necessary to indicate the movement direction and to help user identify the newly generated square at random location. My version haven't added these transitions, although I do show the keyboard movement with arrow signs above the board. I am not working on this project right now. 
 
 ## Techonology used
 React, Redux, React-redux
